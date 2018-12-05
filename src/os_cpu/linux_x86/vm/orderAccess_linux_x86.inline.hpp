@@ -39,6 +39,7 @@ inline void OrderAccess::storeload()  { fence(); }
 
 inline void OrderAccess::acquire() {
   volatile intptr_t local_dummy;
+  // asm memory barries
 #ifdef AMD64
   __asm__ volatile ("movq 0(%%rsp), %0" : "=r" (local_dummy) : : "memory");
 #else
@@ -53,6 +54,7 @@ inline void OrderAccess::release() {
 }
 
 inline void OrderAccess::fence() {
+    // check is multi proccessor
   if (os::is_MP()) {
     // always use locked addl since mfence is sometimes expensive
 #ifdef AMD64
@@ -80,6 +82,7 @@ inline void*    OrderAccess::load_ptr_acquire(const volatile void* p) { return *
 
 inline void     OrderAccess::release_store(volatile jbyte*   p, jbyte   v) { *p = v; }
 inline void     OrderAccess::release_store(volatile jshort*  p, jshort  v) { *p = v; }
+// volatile token on p
 inline void     OrderAccess::release_store(volatile jint*    p, jint    v) { *p = v; }
 inline void     OrderAccess::release_store(volatile jlong*   p, jlong   v) { Atomic::store(v, p); }
 inline void     OrderAccess::release_store(volatile jubyte*  p, jubyte  v) { *p = v; }

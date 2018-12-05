@@ -1854,6 +1854,7 @@ run:
          }
 
       CASE(_putfield):
+          // put static
       CASE(_putstatic):
         {
           u2 index = Bytes::get_native_u2(pc+1);
@@ -1917,6 +1918,7 @@ run:
           // Now store the result
           //
           int field_offset = cache->f2_as_index();
+          // check is volatile
           if (cache->is_volatile()) {
             if (tos_type == itos) {
               obj->release_int_field_put(field_offset, STACK_INT(-1));
@@ -1937,6 +1939,7 @@ run:
             } else {
               obj->release_double_field_put(field_offset, STACK_DOUBLE(-1));
             }
+            // add storeload
             OrderAccess::storeload();
           } else {
             if (tos_type == itos) {

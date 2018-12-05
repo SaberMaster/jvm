@@ -42,6 +42,7 @@ public class AccessFlags implements /* imports */ ClassConstants {
   public boolean isFinal       () { return (flags & JVM_ACC_FINAL       ) != 0; }
   public boolean isSynchronized() { return (flags & JVM_ACC_SYNCHRONIZED) != 0; }
   public boolean isSuper       () { return (flags & JVM_ACC_SUPER       ) != 0; }
+    // check a var is volatile
   public boolean isVolatile    () { return (flags & JVM_ACC_VOLATILE    ) != 0; }
   public boolean isBridge      () { return (flags & JVM_ACC_BRIDGE      ) != 0; }
   public boolean isTransient   () { return (flags & JVM_ACC_TRANSIENT   ) != 0; }
